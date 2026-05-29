@@ -15,6 +15,7 @@ export default function Home() {
   const [isUploading, setIsUploading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -30,6 +31,7 @@ export default function Home() {
 
     setIsUploading(true);
     setUploadStatus(null);
+    setUploadedFileName(null);
     const formData = new FormData();
     formData.append("file", file);
 
@@ -41,7 +43,8 @@ export default function Home() {
       
       const data = await res.json();
       if (res.ok) {
-        setUploadStatus({ type: "success", msg: "Document uploaded and indexed successfully!" });
+        setUploadStatus({ type: "success", msg: `"${file.name}" uploaded and indexed successfully!` });
+        setUploadedFileName(file.name);
       } else {
         setUploadStatus({ type: "error", msg: data.detail || "Failed to upload document" });
       }
@@ -157,6 +160,28 @@ export default function Home() {
             </div>
           )}
         </div>
+
+        {uploadedFileName && (
+          <div className="mt-6 px-1">
+            <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Sample Questions</h3>
+            <div className="space-y-2">
+              {[
+                "What is the main topic of this document?",
+                "Can you summarize the key points?",
+                "What are the main conclusions or takeaways?"
+              ].map((q, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setInput(q)}
+                  className="w-full text-left text-xs bg-white border border-sky-100 hover:border-sky-300 hover:bg-sky-50 hover:text-sky-700 text-slate-600 p-3 rounded-xl transition-all shadow-sm"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        
         
         <div className="mt-auto">
           {/* Removed powered by text as requested */}
