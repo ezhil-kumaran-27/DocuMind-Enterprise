@@ -10,3 +10,5 @@ python-dotenv
 pinecone
 python-multipart
 gunicorn
+langchain-text-splitters
+langchain-community
