@@ -116,15 +116,15 @@ export default function Home() {
     <div className="flex h-screen bg-slate-50 text-slate-900 font-sans">
       {/* Sidebar */}
       <div className="w-80 bg-white border-r border-sky-100 p-6 flex flex-col shadow-sm z-20">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-md border border-sky-100 overflow-hidden p-1">
+        <div className="flex items-center gap-4 mb-10">
+          <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg border border-sky-100 overflow-hidden p-1.5 shrink-0">
             <img src="/logo.png" alt="DocuMind Logo" className="w-full h-full object-contain" />
           </div>
           <div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-extrabold bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent tracking-tight">
               DocuMind
             </h1>
-            <p className="text-xs text-slate-500 font-medium">Enterprise Assistant</p>
+            <p className="text-sm text-slate-500 font-semibold tracking-wide mt-0.5">Enterprise Assistant</p>
           </div>
         </div>
 
@@ -260,18 +260,18 @@ export default function Home() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask a question about your documents..."
-                className="w-full bg-white border border-sky-200 text-slate-900 placeholder-slate-400 text-sm rounded-xl py-4 pl-5 pr-14 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all shadow-md"
+                className="w-full bg-slate-900 border border-slate-800 text-slate-100 placeholder-slate-400 text-sm rounded-xl py-4 pl-5 pr-14 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all shadow-xl"
                 disabled={isTyping}
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isTyping}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-sky-500 hover:bg-sky-600 disabled:bg-slate-200 disabled:text-slate-400 text-white rounded-lg transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-sky-600 hover:bg-sky-500 disabled:bg-slate-800 disabled:text-slate-600 text-white rounded-lg transition-colors shadow-sm"
               >
                 {isTyping ? <Loader2 size={16} className="animate-spin text-slate-400" /> : <Send size={16} />}
               </button>
             </form>
-            <div className="text-center mt-3 text-[10px] text-slate-400 font-medium tracking-wide uppercase">
+            <div className="text-center mt-3 text-[10px] text-slate-600 font-medium tracking-wide uppercase">
               <span className="font-bold text-slate-900">DocuMind AI can make mistakes.</span> Verify important information.
             </div>
           </div>
