@@ -82,3 +82,9 @@ async def ask_question(request: AskRequest):
             yield f"\n\n[Error]: {str(e)}"
             
     return StreamingResponse(event_generator(), media_type="text/plain")
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    # Render requires binding to 0.0.0.0
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
