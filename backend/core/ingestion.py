@@ -2,7 +2,7 @@ import os
 from typing import List, Dict
 import pypdf
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_core.documents import Document
 from pinecone import Pinecone
@@ -76,7 +76,13 @@ def process_and_ingest_pdf(file_path: str, filename: str) -> Dict:
     # 3. Generate Embeddings & 4. Upsert to Pinecone
     try:
         index_name = os.environ.get("PINECONE_INDEX_NAME", "documind-index")
-        embeddings_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        hf_token = os.environ.get("HF_TOKEN")
+        if not hf_token:
+            raise ValueError("HF_TOKEN environment variable is not set.")
+        embeddings_model = HuggingFaceInferenceAPIEmbeddings(
+            api_key=hf_token,
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        )
         
         # Clear the old database so it only remembers the new document
         print("Clearing old memory...")

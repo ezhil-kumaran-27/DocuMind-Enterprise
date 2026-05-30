@@ -1,10 +1,6 @@
 import os
 import shutil
 import tempfile
-import torch
-
-# Limit PyTorch memory usage for Render Free Tier (512MB)
-torch.set_num_threads(1)
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
