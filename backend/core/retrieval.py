@@ -1,7 +1,7 @@
 import os
 from typing import List, Dict, AsyncGenerator
 from langchain_groq import ChatGroq
-from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+from langchain_pinecone import PineconeEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
@@ -10,12 +10,12 @@ from langchain_core.output_parsers import StrOutputParser
 
 # Initialize Vector Store
 def get_vectorstore():
-    hf_token = os.environ.get("HF_TOKEN")
-    if not hf_token:
-        raise ValueError("HF_TOKEN environment variable is not set.")
-    embeddings = HuggingFaceInferenceAPIEmbeddings(
-        api_key=hf_token,
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    pinecone_api_key = os.environ.get("PINECONE_API_KEY")
+    if not pinecone_api_key:
+        raise ValueError("PINECONE_API_KEY environment variable is not set.")
+    embeddings = PineconeEmbeddings(
+        model="multilingual-e5-large",
+        pinecone_api_key=pinecone_api_key
     )
     index_name = os.environ.get("PINECONE_INDEX_NAME", "documind-index")
     vectorstore = PineconeVectorStore(index_name=index_name, embedding=embeddings)
